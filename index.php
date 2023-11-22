@@ -75,7 +75,7 @@ $app->get('/', function (Request $request, Response $response) use ($database) {
 
 # RUTA PARA INICIO DE SESION
 $app->post('/autenticacion', function (Request $request, Response $response, $args) use ($database) {
-    $user = $request->getParam('user')[0];
+    $user = $request->getHeader('user')[0];
     $password = $request->getHeader('pass')[0];
 
     $authResult = authenticateUser($user, $password, $database, $response);
@@ -87,7 +87,6 @@ $app->post('/autenticacion', function (Request $request, Response $response, $ar
             'message' => 'Inicio de sesión exitoso',
             'status' => 'Success'
         ]));
-        $this->session->set;
         return $response->withHeader('Content-Type', 'application/json')
         ->withHeader('Location', 'dashboard.html');
     } else {
