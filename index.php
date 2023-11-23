@@ -87,8 +87,7 @@ $app->post('/autenticacion', function (Request $request, Response $response, $ar
             'message' => 'Inicio de sesión exitoso',
             'status' => 'Success'
         ]));
-        return $response->withHeader('Content-Type', 'application/json')
-        ->withHeader('Location', 'dashboard.html');
+        return $response->withHeader('Content-Type', 'application/json');
     } else {
         // Usuario no encontrado o contraseña incorrecta
         $response->getBody()->write(json_encode([
@@ -110,8 +109,7 @@ $app->post('/login', function (Request $request, Response $response) use ($datab
     if (authenticateUser($user, $password, $database, $response)) {
         // Autenticación exitosa
         $response->getBody()->write(json_encode(['message' => 'Inicio de sesión exitoso']));
-        return $response->withHeader('Content-Type', 'application/json')
-        ->withHeader('Location','dashboard.html');
+        return $response->withHeader('Content-Type', 'application/json');
     } else {
         // Usuario no encontrado o contraseña incorrecta
         $response->getBody()->write(json_encode(['message' => 'Error de inicio de sesión']));

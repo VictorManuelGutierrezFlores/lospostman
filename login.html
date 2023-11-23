@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesión</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="js/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="js/main.js" ></script>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
                     <p class="text-gray-500 dark:text-gray-400"><I>Inicia sesión para entrar a tu cuenta</I></p>
                 </div>
                 <div class="m-7">
-                    <form action="">
+                    <form action="" id="loginForm">
                         <div class="mb-6">
                             <label for="user"
                                 class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Usuario</label>
@@ -49,39 +49,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function () {
-            $('#loginButton').click(function () {
-                var username = $('#username').val();
-                var password = $('#password').val();
-
-                $.ajax({
-                    url: 'http://localhost/serviciosweb/lospostman/autenticacion',
-                    method: 'POST',
-                    beforeSend: function(request){
-                        request.setRequestHeader('Content-Type', 'application/json');
-                    },
-                    data: JSON.stringify({
-                        username: username,
-                        password: password
-                    }),
-                    success: function (data) {
-                        if (data.success) {
-                            alert('Login successful!');
-                            window.location.href = '/dashboard.html';
-                        } else {
-                            alert('Login failed.');
-                        }
-                    },
-                    error: function (error) {
-                        console.error('Error:', error);
-                    }
-                });
-            });
-        });
-    </script>
-
 </body>
-
 </html>

@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/riva-dashboard-tailwind/riva-dashboard.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/riva-dashboard-tailwind/riva-dashboard.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.js"></script>
+    <script src="js/app.js"></script>
 
 </head>
 
@@ -38,15 +40,17 @@
             </div>
         </div>
     </nav>
-    
+
     <div class="grid grid-rows-4 grid-flow-col gap-4">
         <!--SIDEBAR-->
         <div class="row-span-4 px-8 pt-5">
-            <ul class="space-y space-y-4 text-sm text-gray-500 md:me-4 md:mb-0" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+            <ul class="space-y space-y-4 text-sm text-gray-500 md:me-4 md:mb-0" id="default-tab"
+                data-tabs-toggle="#default-tab-content" role="tablist">
                 <li class="me-2" role="presentation">
                     <a href="#"
                         class="inline-flex items-center px-7 py-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-base rounded-lg text-sm px-4 py-2 text-center"
-                        id="ventas-tab" data-tabs-target="#ventas" type="button" role="tab" aria-controls="ventas" aria-selected="false" >
+                        id="ventas-tab" data-tabs-target="#ventas" type="button" role="tab" aria-controls="ventas"
+                        aria-selected="false">
                         <svg class="w-5 h-5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor" viewBox="0 0 20 20">
                             <path
@@ -58,7 +62,8 @@
                 <li class="me-2" role="presentation">
                     <a href="#"
                         class="inline-flex items-center px-4 py-3 rounded-lg text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
-                        id="almacen-tab" data-tabs-target="#almacen" type="button" role="tab" aria-controls="almacen" aria-selected="false">
+                        id="almacen-tab" data-tabs-target="#almacen" type="button" role="tab" aria-controls="almacen"
+                        aria-selected="false">
                         <svg class="w-5 h-5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor" viewBox="0 0 20 20">
                             <path
@@ -79,16 +84,21 @@
                         <div
                             class="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
                             <!-- card header -->
-                            <div class="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
-                                <h3 class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
+                            <div
+                                class="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
+                                <h3
+                                    class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
                                     <span class="mr-3 font-semibold text-dark">Archivo de libros</span>
-                                    <span class="mt-1 font-medium text-secondary-dark text-lg/normal">Todos los libros de Los Postman</span>
+                                    <span class="mt-1 font-medium text-secondary-dark text-lg/normal">Todos los libros
+                                        de Los Postman</span>
                                 </h3>
                                 <div>
                                     <button onclick="location.href='agregar.php'"
                                         class="inline-flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                        <svg class="w-5 h-5 text-gray-800 dark:text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                                        <svg class="w-5 h-5 text-gray-800 dark:text-white me-2" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="M9 1v16M1 9h16" />
                                         </svg>
                                         <span class="self-center text-2xl font-semibold whitespace-nowrap">Añadir</span>
                                     </button>
@@ -98,7 +108,8 @@
                             <!-- card body  -->
                             <div class="flex-auto block py-8 pt-6 px-9">
                                 <div class="overflow-x-auto">
-                                    <table class="w-full my-0 align-middle text-dark border-neutral-200">
+                                    <table class="w-full my-0 align-middle text-dark border-neutral-200" >
+                                        <!--CABECERA-->
                                         <thead class="align-bottom">
                                             <tr class="font-semibold text-[1rem] text-secondary-dark">
                                                 <th class="pb-3 text-start min-w-[175px] mr-auto">Titulo</th>
@@ -108,7 +119,7 @@
 
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="products">
                                             <tr class="border-b border-dashed last:border-b-0">
                                                 <td class="p-3 pl-0">
                                                     <div class="flex items-center">
@@ -124,25 +135,22 @@
                                                         Cambell</span>
                                                 </td>
                                                 <td class="p-3 pr-0 text-end">
-                                                    <span
-                                                        class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-success bg-success-light rounded-lg">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                            class="w-5 h-5 mr-1">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
-                                                        </svg> 6.5% </span>
+                                                    <span class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-success bg-success-light rounded-lg">
+                                                        Example
+                                                    </span>
                                                 </td>
                                                 <td class="p-3 pr-0 text-end">
                                                     <!---Acciones-->
-                                                    <div data-dial-init class="flex justify-end relative">
+                                                    <div data-dial-init class="flex justify-end relative" id="acciones">
                                                         <div id="speed-dial-menu-horizontal"
                                                             class="flex items-center hidden me-4 space-x-2 rtl:space-x-reverse">
-                                                            <button type="button" data-tooltip-target="tooltip-editar" data-tooltip-placement="top" onclick="location.href='modificar.html'"
+                                                            <button type="button" data-tooltip-target="tooltip-editar"
+                                                                data-tooltip-placement="top"
+                                                                onclick="location.href='modificar.html'"
                                                                 class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
                                                                 <svg class="w-5 h-5" aria-hidden="true"
-                                                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                                    viewBox="0 0 18 18">
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="currentColor" viewBox="0 0 18 18">
                                                                     <path
                                                                         d="m13.835 7.578-.005.007-7.137 7.137 2.139 2.138 7.143-7.142-2.14-2.14Zm-10.696 3.59 2.139 2.14 7.138-7.137.007-.005-2.141-2.141-7.143 7.143Zm1.433 4.261L2 12.852.051 18.684a1 1 0 0 0 1.265 1.264L7.147 18l-2.575-2.571Zm14.249-14.25a4.03 4.03 0 0 0-5.693 0L11.7 2.611 17.389 8.3l1.432-1.432a4.029 4.029 0 0 0 0-5.689Z" />
                                                                 </svg>
@@ -158,8 +166,8 @@
                                                                 data-tooltip-placement="top"
                                                                 class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
                                                                 <svg class="w-5 h-5" aria-hidden="true"
-                                                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                                    viewBox="0 0 20 20">
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="currentColor" viewBox="0 0 20 20">
                                                                     <path
                                                                         d="M5 20h10a1 1 0 0 0 1-1v-5H4v5a1 1 0 0 0 1 1Z" />
                                                                     <path
@@ -173,8 +181,10 @@
                                                                 <div class="tooltip-arrow" data-popper-arrow></div>
                                                             </div>
                                                         </div>
-                                                        <button type="button" data-dial-toggle="speed-dial-menu-horizontal"
-                                                            aria-controls="speed-dial-menu-horizontal" aria-expanded="false"
+                                                        <button type="button"
+                                                            data-dial-toggle="speed-dial-menu-horizontal"
+                                                            aria-controls="speed-dial-menu-horizontal"
+                                                            aria-expanded="false"
                                                             class="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
                                                             <svg class="w-5 h-5 transition-transform group-hover:rotate-45"
                                                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +219,8 @@
                                 <h3
                                     class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
                                     <span class="mr-3 font-semibold text-dark">Archivo de libros</span>
-                                    <span class="mt-1 font-medium text-secondary-dark text-lg/normal">Todos los libros de Los Postman</span>
+                                    <span class="mt-1 font-medium text-secondary-dark text-lg/normal">Todos los libros
+                                        de Los Postman</span>
                                 </h3>
                                 <div>
 
@@ -263,6 +274,114 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function listarProductos() {
+            $('document').ready(function () {
+                $.ajax({
+                    url: './backend/product-list.php',
+                    type: 'GET',
+                    success: function (response) {
+                        let productos = JSON.parse(response);
+                        let template = '';
+
+                        productos.forEach(producto => {
+                            let descripcion = '';
+                            descripcion += '<li>precio: ' + producto.precio + '</li>';
+                            descripcion += '<li>unidades: ' + producto.unidades + '</li>';
+                            descripcion += '<li>modelo: ' + producto.modelo + '</li>';
+                            descripcion += '<li>marca: ' + producto.marca + '</li>';
+                            descripcion += '<li>detalles: ' + producto.detalles + '</li>';
+
+                            template += `
+                        <tr class="border-b border-dashed last:border-b-0" productId="${producto.id}">
+                                                <td class="p-3 pl-0">
+                                                    <div class="flex items-center">
+                                                        <div class="flex flex-col justify-start">
+                                                            <p class="mb-1 font-semibold transition-colors duration-200 ease-in-out text-lg/normal text-secondary-inverse hover:text-primary"
+                                                                id="titulo">
+                                                                ${producto.id}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="p-3 pr-0 text-end">
+                                                    <span class="font-semibold text-light-inverse text-md/normal">
+                                                        ${producto.nombre}
+                                                        </span>
+                                                </td>
+                                                <td class="p-3 pr-0 text-end">
+                                                    <span class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-success bg-success-light rounded-lg">
+                                                        ${producto.descripcion}
+                                                    </span>
+                                                </td>
+                                                <td class="p-3 pr-0 text-end">
+                                                    <!---Acciones-->
+                                                    <div data-dial-init class="flex justify-end relative" id="acciones">
+                                                        <div id="speed-dial-menu-horizontal"
+                                                            class="flex items-center hidden me-4 space-x-2 rtl:space-x-reverse">
+                                                            <button type="button" data-tooltip-target="tooltip-editar"
+                                                                data-tooltip-placement="top"
+                                                                onclick="location.href='modificar.html'"
+                                                                class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
+                                                                <svg class="w-5 h-5" aria-hidden="true"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="currentColor" viewBox="0 0 18 18">
+                                                                    <path
+                                                                        d="m13.835 7.578-.005.007-7.137 7.137 2.139 2.138 7.143-7.142-2.14-2.14Zm-10.696 3.59 2.139 2.14 7.138-7.137.007-.005-2.141-2.141-7.143 7.143Zm1.433 4.261L2 12.852.051 18.684a1 1 0 0 0 1.265 1.264L7.147 18l-2.575-2.571Zm14.249-14.25a4.03 4.03 0 0 0-5.693 0L11.7 2.611 17.389 8.3l1.432-1.432a4.029 4.029 0 0 0 0-5.689Z" />
+                                                                </svg>
+                                                                <span class="sr-only">Editar</span>
+                                                            </button>
+                                                            <!--TOOLTIP-->
+                                                            <div id="tooltip-editar" role="tooltip"
+                                                                class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                                                Editar
+                                                                <div class="tooltip-arrow" data-popper-arrow></div>
+                                                            </div>
+                                                            <button type="button" data-tooltip-target="tooltip-print"
+                                                                data-tooltip-placement="top"
+                                                                class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
+                                                                <svg class="w-5 h-5" aria-hidden="true"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="currentColor" viewBox="0 0 20 20">
+                                                                    <path
+                                                                        d="M5 20h10a1 1 0 0 0 1-1v-5H4v5a1 1 0 0 0 1 1Z" />
+                                                                    <path
+                                                                        d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z" />
+                                                                </svg>
+                                                                <span class="sr-only">Eliminar</span>
+                                                            </button>
+                                                            <div id="tooltip-print" role="tooltip"
+                                                                class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                                                Eliminar
+                                                                <div class="tooltip-arrow" data-popper-arrow></div>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button"
+                                                            data-dial-toggle="speed-dial-menu-horizontal"
+                                                            aria-controls="speed-dial-menu-horizontal"
+                                                            aria-expanded="false"
+                                                            class="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
+                                                            <svg class="w-5 h-5 transition-transform group-hover:rotate-45"
+                                                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none" viewBox="0 0 18 18">
+                                                                <path stroke="currentColor" stroke-linecap="round"
+                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                    d="M9 1v16M1 9h16" />
+                                                            </svg>
+                                                            <span class="sr-only">Abrir Menu</span>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                    `;
+                        });
+                        $('#products').html(template);
+                    }
+                });
+            });
+        }
+    </script>
+
 
 </body>
 

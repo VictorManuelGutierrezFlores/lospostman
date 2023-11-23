@@ -1,50 +1,23 @@
-/// CONVERSION A HEADERS
-function enviar() {
-    var usuario = document.getElementById("username");
-    var contraseña = document.getElementById("password");
-
-    var base64 = btoa(usuario + ":" + contraseña);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost/serviciosweb/lospostman/autenticacion", true);
-    xhr.setRequestHeader("Authorization", "Basic " + base64);
-
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            alert("Login correcto");
-        } else {
-            alert("Login incorrecto");
-        }
-    };
-
-    xhr.send();
-}
-
-
-$(document).ready(function () {
-    $('#loginButton').click(function () {
-        var username = $('#username').val();
-        var password = $('#password').val();
-
+/// LOGIN FORM
+$(document).ready( function(){
+    console.log("JQuery Working")
+    $('#loginButton').click(function(e){
         $.ajax({
-            url: 'api/login',
+            url: "http://localhost/serviciosweb/lospostman/autenticacion",
             method: 'POST',
-            dataType: 'json',
-            data: {
-                username: username,
-                password: password
+            headers: {
+                "user": $('#username').val(),
+                "pass": $('#password').val()
             },
-            success: function (data) {
-                if (data.success) {
+            success: function(data){
+                if(data.status == "Success"){
                     alert('Login successful!');
-                    window.location.href = '/';
-                } else {
-                    alert('Login failed.');
+                    window.location.href = 'http://localhost/serviciosweb/lospostman/dashboard.html';
+                }else{
+                    alert("Login failed!");
                 }
-            },
-            error: function (error) {
-                console.error('Error:', error);
             }
         });
+        e.preventDefault();
     });
 });
