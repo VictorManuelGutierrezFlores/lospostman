@@ -234,7 +234,9 @@ $app->get('/detalles/{clave}', function (Request $request, Response $response, $
 });
 
 // RUTA PARA INSERTAR NUEVO REGISTRO
-$app->put('/productos/{categoria}', function (Request $request, Response $response, $args) use ($database) {
+// METHOD: POST 
+// RETURN: JSON
+$app->post('/producto/{categoria}', function (Request $request, Response $response, $args) use ($database) {
 
     $user = $request->getHeader('user')[0];
     $password = $request->getHeader('pass')[0];
