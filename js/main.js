@@ -4,11 +4,65 @@ function crearJSON() {
     var datosFormulario = $('#Formulario').serialize();
     // CONVIERTE DATOS EN JSON
     var datosJSON = JSON.stringify(datosFormulario);
-    
     var json = JSON.parse(datosJSON)
     //DEVUELVE JSON
     return json;
 }
+// FUNCION: VERIFICAR EMAIL
+function verifyEmail(email) {
+    var regex = /^(([^<>()\[\]\\.,;:\s@"]+)@(([a-zA-Z0-9-]+\.)+)[a-zA-Z]{2,})$/;
+    return regex.test(email)
+}
+
+// FUNCION: VERIFICAR CONTRASEÑA SEGURA
+function verifyPassword(password) {
+    // Requerimiento minimos
+    var length = password.length;
+    var hasUpperCase = /[A-Z]/.test(password);
+    var hasLowerCase = /[a-z]/.test(password);
+    var hasNumber = /[0-9]/.test(password);
+
+    return length >= 8 && hasLowerCase && hasUpperCase && hasNumber;
+}
+
+
+
+
+/// SIGNIN FORM
+$(document).ready(function () {
+    $('#signinButton').click(function (e) {
+        var email = $('#email').val();
+        var password = $('#password').val();
+        if (verifyEmail(email) && verifyPassword(password)) {
+            $.ajax({
+                url: "NOMBRE DE LA RUTA DE SIGNIN",
+                method: 'POST',
+                headers: {
+                    "user": $('#username').val(), // Envio de credenciales por HEADERS
+                    "pass": password,
+                    "email": email,
+                    "disable": False
+                },
+                success: function (data) {
+                    if (data.success) {
+                    // GUARDANDO CREDENCIALES 
+                        localStorage.setItem("user", $('#username').val());
+                        localStorage.setItem("pass", $('#password').val());
+                        alert('Sign In successful!');
+                        window.location.href = 'http://localhost/serviciosweb/lospostman/dashboard.html';
+                    } else {
+                        alert("Sign In failed!!")
+                        console.log(data)
+                    }
+
+                } 
+            });
+            e.preventDefault();
+        } else {
+            alert("Verifica tus datos!!")
+        }
+    });
+});
 
 /// LOGIN FORM
 $(document).ready(function () {
@@ -50,16 +104,16 @@ $(document).ready(function () {
             url: "http://localhost/serviciosweb/lospostman/producto/",
             method: 'POST',
             headers: {
-                "user" : localStorage.getItem('user'),
-                'pass' : localStorage.getItem('pass')
+                "user": localStorage.getItem('user'),
+                'pass': localStorage.getItem('pass')
             },
-            data : JSONData,
-            success: function (data){
-                if(data.status == "Success"){
+            data: JSONData,
+            success: function (data) {
+                if (data.status == "Success") {
                     alert("Insercion exitosa");
                     window.location.href = 'http://localhost/serviciosweb/lospostman/dashboard.html';
                     console.log(data);
-                }else{
+                } else {
                     alert("Insercion fallida");
                     console.log(data);
                 }
