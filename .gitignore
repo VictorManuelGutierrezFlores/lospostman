@@ -1,1 +1,5 @@
 /vendor
+/authAPI/include
+/authAPI/Lib
+/authAPI/Scripts
+/authAPI/__pycache__
