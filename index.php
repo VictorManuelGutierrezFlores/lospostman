@@ -99,6 +99,72 @@ $app->post('/autenticacion', function (Request $request, Response $response, $ar
     }
 });
 
+# RUTA DE CREACION DE USUARIO
+$app->post('/signin', function(Request $request, Response $response) use ($database){
+    $user = $request->getHeader('username')[0];
+    $password = $request->getHeader('password')[0];
+    $email = $request->getHeader('email')[0];
+    $disable = false;
+    $authResult = authenticateUser($user, $password, $database, $response);
+
+    if ($authResult['success']) {
+        $data = json_decode($request->getBody(), true);
+        // CONFIRMACION DE CAMPOS REQUERIDOS
+        $requiredFields = ['username', 'password', 'email', 'disable'];
+        foreach($requiredFields as $field){
+            if (empty($data[$field])){
+                $response->getBody()->write(json_encode(['error' => "El campo $field es obligatorio"]));
+                return $response->withStatus(400)->withHeader('COntent-Type', 'application/json');
+            }
+        }
+
+        // PRUEBAS COMO CLAVE UNICA
+        $credencialesRef = $database->getReference("credenciales/$user");
+        if ( $credencialesRef->getSnapshot()->hasChildren() ){
+            $response->getBody()->write( json_encode([
+                'code' => '400',
+                'message' => "Categoria No encontrada '$user'",
+                'data' => ' ',
+                'status' => 'Error'
+            ]) );
+            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+        }
+
+        // MODEL USER
+        $newUser = [
+            'username' => $user,
+            'password' => $password,
+            'email' => $email,
+            'disable' => $disable
+        ];
+        // INSERCION DE LA BASE
+        $credencialesRef->set($newUser);
+        // FECHA DE INSERCION
+        $dateInsert =  date('Y-m-d H:i:s');
+        // MENSAJE
+        $responseMessage = [
+            'code' => '202',
+            'message' => "Producto registrado correctamente",
+            'data' =>  $dateInsert,
+            'status' => 'Success'
+        ];
+
+        // Retornar un mensaje de éxito con la fecha de inserción
+        $response->getBody()->write(json_encode([$responseMessage, JSON_PRETTY_PRINT]));
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
+    } else {
+        // Usuario no encontrado o contraseña incorrecta
+        $response->getBody()->write(json_encode([
+            'code' => '501',
+            'message' => $authResult['error'],
+            'status' => 'Error',
+        ]));
+        return $response->withStatus(401)->withHeader('Content-Type', 'application/json');
+    }
+
+});
+
+
 # Ruta para Iniciar sesion
 $app->post('/login', function (Request $request, Response $response) use ($database) {
     $data = $request->getParsedBody();
@@ -117,7 +183,14 @@ $app->post('/login', function (Request $request, Response $response) use ($datab
     }
 });
 
+// RUTA PARA CERRAR SESION
+$app->get('/logout', function (Request $request, Response $response){
+    // DESTRUCCION DE SESION
+    session_destroy();
 
+    // REDIRIGIR A LOGIN
+    return $response->withHeader('Location', '/login.html')->withStatus(200);
+});
 
 // Aplica el middleware de autenticación a rutas específicas
 $app->get('/ruta-protegida', function (Request $request, Response $response, $args) {
@@ -382,7 +455,6 @@ $app->put('/productos/detalles/{isbn}', function (Request $request, Response $re
         return $response->withStatus(501)->withHeader('Content-Type', 'application/json');
     }
 });
-
 
 
 $app->delete('/productos/{isbn}', function (Request $request, Response $response, $args) use ($database) {
