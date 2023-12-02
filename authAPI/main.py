@@ -10,14 +10,17 @@ from jose import jwt, JWTError
 from passlib.context import CryptContext
 #Importamos libreria de fechas para la expiración del token
 from datetime import datetime, timedelta
-from utils import  get_hashed_password, create_access_token, create_refresh_token, verify_password, searchUserOnDB
+from utils import  get_hashed_password, create_access_token, create_refresh_token, verify_password, searchUserOnDB, verify_access_token
 from schemas import TokenPayload, TokenSchema
+
+
 
 # INICIALIZACION DEL API
 app = FastAPI()
 #Autenticación por contraseña para eso:
 # Creamos un endpoint llamado "auth"
 oauth2 = OAuth2PasswordBearer(tokenUrl="auth")
+
 
 
 #############
@@ -45,7 +48,21 @@ async def auth(form_data: OAuth2PasswordRequestForm = Depends()):
             detail="Contraseña incorrecta!"
         )
     
-    return{
-        "access_token": create_access_token(user.get("email")),
-        "refresh_token": create_refresh_token(user.get("email"))
+    # Generar un nuevo token de acceso
+    access_token = create_access_token(user.get("email"))
+
+    # Verificar la validez del token de acceso antes de enviarlo como respuesta
+    if not verify_access_token(access_token):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token de acceso no válido"
+        )
+
+    return {
+        "access_token": access_token,
+        "refresh_token": create_refresh_token(user.get("email")),
+        "acceso concedido": HTTPException(status_code=status.HTTP_200_OK)
     }
+
+
+
