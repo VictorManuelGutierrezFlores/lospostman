@@ -21,8 +21,8 @@ $firebaseFactory = (new Factory)
 $database = $firebaseFactory->createDatabase();
 $auth = $firebaseFactory->createAuth();
 $app = AppFactory::create();
+//$app->setBasePath("/serviciosweb/lospostman");
 $app->setBasePath("/serviciosweb/lospostman");
-
 
 
 function authenticateUser($user, $password, $database, $response)
@@ -275,9 +275,11 @@ $app->get('/detalles/{clave}', function (Request $request, Response $response, $
                 'code' => '300',
                 'message' => "No hay productos en la categoría '$clave'",
                 'data' => ' ',
-                'status' => 'Success'
+                'status' => 'Error'
             ];
+            
             $response->getBody()->write(json_encode($responseData, JSON_PRETTY_PRINT));
+            
             return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
         }
 
@@ -287,13 +289,14 @@ $app->get('/detalles/{clave}', function (Request $request, Response $response, $
 
         $Mensaje = [
             'code' => '200',
-            'message' => "Categoria encotrada exitosamente",
+            'message' => "Producto encotrado exitosamente",
             'data' => $productos,
             'status' => 'Success'
         ];
 
         // Construir manualmente la respuesta JSON
         $response->getBody()->write(json_encode($Mensaje, JSON_PRETTY_PRINT));
+        
         return $response->withHeader('Content-Type', 'application/json');
     } else {
         // Usuario no encontrado o contraseña incorrecta
@@ -338,7 +341,7 @@ $app->post('/producto/{categoria}', function (Request $request, Response $respon
         if ($productosRef->getSnapshot()->hasChildren()) {
             $response->getBody()->write(json_encode([
                 'code' => '300',
-                'message' => "Categoria No encontrada '$categoria'",
+                'message' => "Producto existente ",
                 'data' => ' ',
                 'status' => 'Error'
             ]));
@@ -361,15 +364,14 @@ $app->post('/producto/{categoria}', function (Request $request, Response $respon
         // Obtener la fecha actual en el formato deseado
         $fechaInsercion = date('Y-m-d H:i:s');
 
-        $Mensaje = [
-            'code' => '202',
-            'message' => "Producto registrado correctamente",
-            'data' =>  $fechaInsercion,
-            'status' => 'Success'
-        ];
+       
 
         // Retornar un mensaje de éxito con la fecha de inserción
-        $response->getBody()->write(json_encode([$Mensaje, JSON_PRETTY_PRINT]));
+        $response->getBody()->write(json_encode([
+            'code' => '202',
+            'message' => "Producto registrado correctamente",
+            'data' => $fechaInsercion,
+            'status' => 'Success']));
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
     } else {
         // Usuario no encontrado o contraseña incorrecta
@@ -435,15 +437,13 @@ $app->put('/productos/detalles/{isbn}', function (Request $request, Response $re
         // Obtener la fecha actual en el formato deseado
         $fechaModificacion = date('Y-m-d H:i:s');
 
-        $Mensaje = [
+       
+        // Retornar un mensaje de éxito
+        $response->getBody()->write(json_encode([
             'code' => '202',
             'message' => "Producto registrado correctamente",
             'data' =>  $fechaModificacion,
-            'status' => 'Success'
-        ];
-
-        // Retornar un mensaje de éxito
-        $response->getBody()->write(json_encode([$Mensaje, JSON_PRETTY_PRINT]));
+            'status' => 'Success']));
         return $response->withStatus(202)->withHeader('Content-Type', 'application/json');
     } else {
         // Usuario no encontrado o contraseña incorrecta
@@ -489,15 +489,14 @@ $app->delete('/productos/{isbn}', function (Request $request, Response $response
         $fechaEliminacion = date('Y-m-d H:i:s');
 
 
-        $Mensaje = [
+       
+
+        // Retornar un mensaje de éxito
+        $response->getBody()->write(json_encode([
             'code' => '204',
             'message' => "Producto eliminado correctamente",
             'data' =>  $fechaEliminacion,
-            'status' => 'Success'
-        ];
-
-        // Retornar un mensaje de éxito
-        $response->getBody()->write(json_encode([$Mensaje, JSON_PRETTY_PRINT]));
+            'status' => 'Success']));
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
     } else {
         // Usuario no encontrado o contraseña incorrecta
