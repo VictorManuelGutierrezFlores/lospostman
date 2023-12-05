@@ -94,31 +94,216 @@ $(document).ready(function () {
 
 // ADD PRODUCT
 $(document).ready(function () {
-    console.log("Ready!");
+    
     $('#addButton').click(function (e) {
-        var JSONData = crearJSON();
-        console.log(JSONData);
+        var id = $('#Categoria').val();
+        console.log(id);
+        var url = 'http://localhost/serviciosweb/lospostman/producto/'+id;
+        //var JSONData = crearJSON();
+       // console.log(JSONData);
         // convierte una cadena JSON en un objeto JavaScript.
-        dataPars = JSON.parse(JSONData);
+        //dataPars = JSON.stringify(JSONData);
+        
+        
+       
+
+        // Construir el objeto de datos
+        var JSONData = {
+                ISBN:$("#ISBN").val(),
+                Autor: $("#Autor").val(),
+                Descuento: $("#Descuento").val(),
+                Editorial: $("#Editorial").val(),
+                Fecha: $("#Fecha").val(),
+                Nombre: $("#Nombre").val(),
+                Precio: $("#Precio").val()
+            
+        };
         $.ajax({
-            url: "http://localhost/serviciosweb/lospostman/producto/",
-            method: 'POST',
+            url: url,
+            type: 'POST',
             headers: {
-                "user": localStorage.getItem('user'),
+                 "user": localStorage.getItem('user'),
                 'pass': localStorage.getItem('pass')
             },
-            data: JSONData,
-            success: function (data) {
-                if (data.status == "Success") {
+            dataType: 'json',
+           // contentType: "application/json",
+            data: JSON.stringify(JSONData),
+            success: function(response) {
+                // Manejar la respuesta del servidor.
+                if (response.status === 'Success') {
                     alert("Insercion exitosa");
                     window.location.href = 'http://localhost/serviciosweb/lospostman/dashboard.html';
-                    console.log(data);
-                } else {
-                    alert("Insercion fallida");
-                    console.log(data);
-                }
+                    console.log(response.data);
+                    $('#respServer').text(response.message);
+                // Puedes hacer lo que necesites con los datos en 'response.data'.
+                }},
+            error: function(error) {
+                // Manejar errores.
+                dat=error.responseJSON;
+                alert('El producto ya existe');
+                console.error(dat.message);
+                
+                $('#respServer').text(dat.message);
             }
-        });
+            });
         e.preventDefault();
     });
 });
+
+
+// PUT PRODUCT
+$(document).ready(function () {
+    
+    $('#putButton').click(function (e) {
+        var id = $('#ISBN').val();
+        console.log(id);
+        var link = 'http://localhost/serviciosweb/lospostman/productos/detalles/'+id;
+        // Construir el objeto de datos
+        var JSONData = {
+                ISBN:$("#ISBN").val(),
+                Autor: $("#Autor").val(),
+                Descuento: $("#Descuento").val(),
+                Editorial: $("#Editorial").val(),
+                Fecha: $("#Fecha").val(),
+                Nombre: $("#Nombre").val(),
+                Precio: $("#Precio").val()
+            
+        };
+        $.ajax({
+            type: "PUT",
+            url: link,
+            //contentType: "application/json; charset=utf-8",
+            headers: {
+                 "user": localStorage.getItem('user'),
+                'pass': localStorage.getItem('pass')
+            },
+            data: JSON.stringify(JSONData),
+            success: function(response) {
+                // Manejar la respuesta del servidor.
+                if (response.status === 'Success') {
+                    alert("Actualizacion exitosa");
+                    window.location.href = 'http://localhost/serviciosweb/lospostman/dashboard.html';
+                    console.log(response.data);
+                    $('#respServer').text(response.message);
+                // Puedes hacer lo que necesites con los datos en 'response.data'.
+                }},
+            error: function(error) {
+                // Manejar errores.
+                dat=error.responseJSON;
+                alert('Producto no encontrado');
+                console.error(dat.message);
+                
+                $('#respServer').text(dat.message);
+            }
+            });
+        e.preventDefault();
+    });
+});
+
+
+
+// GET PRODUCT
+
+$(document).ready(function () {
+    $('#getButton').click(function (e) {
+        var id = $('#ISBN').val();
+        var url = 'http://localhost/serviciosweb/lospostman/detalles/'+id;
+
+        // Ejemplo de AJAX en JavaScript usando jQuery.
+
+            $.ajax({
+            url: url, // Asegúrate de ajustar la URL según tu configuración
+            method: 'GET',
+            headers: {
+                 "user": localStorage.getItem('user'),
+                'pass': localStorage.getItem('pass')
+            },
+            dataType: 'json',
+            success: function(response) {
+                // Manejar la respuesta del servidor.
+                if (response.status === 'Success') {
+                    alert("Obtencion exitosa");
+                    console.log(response.data);
+                var datos = response.data;
+                var respAutor='Autor: ' + datos.Autor ;
+                var respNombre='Nombre: ' + datos.Nombre ;
+                var respEditorial='Editorial: ' + datos.Editorial ;
+                var respFecha='Fecha: ' + datos.Fecha ;
+               
+                var respPrecio='Precio: ' + datos.Precio ;
+                var respDescuento='Descuento: ' + datos.Descuento ;
+                $('#respNombre').text(respNombre);
+                $('#respAutor').text(respAutor);
+                $('#respEditorial').text(respEditorial);
+                $('#respFecha').text(respFecha);
+               
+                $('#respPrecio').text(respPrecio);
+                $('#respDescuento').text(respDescuento);
+                // Puedes hacer lo que necesites con los datos en 'response.data'.
+                } 
+            },
+            error: function(error) {
+                // Manejar errores.
+                dat=error.responseJSON;
+                alert('Producto no encontrado');
+                console.error(dat.message);
+                $('#respNombre').text(dat.message);
+                    $('#respAutor').text("");
+                    $('#respEditorial').text("");
+                    $('#respFecha').text("");
+                    $('#respISBN').text("");
+                    $('#respPrecio').text("");
+                    $('#respDescuento').text("");
+            }
+            });
+
+        e.preventDefault();
+    });
+});
+
+
+//Delete product
+
+
+$(document).ready(function () {
+    $('#delButton').click(function (e) {
+        var id = $('#ISBN').val();
+        var url = 'http://localhost/serviciosweb/lospostman/productos/'+id;
+
+        // Ejemplo de AJAX en JavaScript usando jQuery.
+
+            $.ajax({
+            url: url, // Asegúrate de ajustar la URL según tu configuración
+            type: 'DELETE',
+            headers: {
+                 "user": localStorage.getItem('user'),
+                'pass': localStorage.getItem('pass')
+            },
+            
+            success: function(response) {
+                // Manejar la respuesta del servidor.
+                if (response.status === 'Success') {
+                    alert("Eliminacion exitosa");
+                    window.location.href = 'http://localhost/serviciosweb/lospostman/dashboard.html';
+                    console.log(response.data);
+                    $('#respServer').text(response.message);
+                // Puedes hacer lo que necesites con los datos en 'response.data'.
+                }
+            },
+            error: function(error) {
+                // Manejar errores.
+                dat=error.responseJSON;
+                alert('Producto no encontrado');
+                console.error(dat.message);
+                
+                $('#respServer').text(dat.message);
+            }
+            });
+
+        e.preventDefault();
+    });
+});
+
+
+
+
