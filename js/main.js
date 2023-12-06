@@ -49,7 +49,7 @@ $(document).ready(function () {
                         localStorage.setItem("user", $('#username').val());
                         localStorage.setItem("pass", $('#password').val());
                         alert('Sign In successful!');
-                        window.location.href = 'http://localhost/serviciosweb/lospostman/dashboard.html';
+                        window.location.href = 'http://localhost/ServiciosWeb/ProyectoFinalV1/Slim/dashboard.html';
                     } else {
                         alert("Sign In failed!!")
                         console.log(data)
@@ -64,33 +64,65 @@ $(document).ready(function () {
     });
 });
 
-/// LOGIN FORM
+// LOGOUT
+// Función para cerrar sesión
+function logout() {
+    // Elimina el token del almacenamiento local
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    
+    // Puedes redirigir al usuario a la página de inicio u otra página después del cierre de sesión
+    window.location.href = 'http://localhost/ServiciosWeb/ProyectoFinalV1/Slim/login.html';
+}
+
+// Evento clic en el botón de cerrar sesión
 $(document).ready(function () {
+    $('#logoutButton').click(function (e) {
+        // Llama a la función de cerrar sesión al hacer clic en el botón
+        logout();
+        e.preventDefault();
+    });
+});
+
+$(document).ready(function () {
+    var permiteAcceso = false;
+
     $('#loginButton').click(function (e) {
         $.ajax({
-            url: "http://localhost/serviciosweb/lospostman/autenticacion",
+            url: "http://localhost/ServiciosWeb/ProyectoFinalV1/Slim/autenticacion",
             method: 'POST',
             headers: {
-                "user": $('#username').val(), // Envio de credenciales por HEADERS
+                "user": $('#username').val(),
                 "pass": $('#password').val()
             },
             success: function (data) {
-                // Redireccion a Dashboard por status
                 if (data.status == "Success") {
-                    // GUARDANDO CREDENCIALES 
                     localStorage.setItem("user", $('#username').val());
                     localStorage.setItem("pass", $('#password').val());
+
+                    // Verificar permiteAcceso después de una verificación exitosa
+                    permiteAcceso = data.permiteAcceso;
+
+                    if (permiteAcceso) {
+                        alert('Puede acceder. El proyecto C# está en ejecución.');
+                    } else {
+                        permiteAcceso = false;
+                        alert('No puede acceder. Espere a que se inicie el proyecto C#.');
+                    }
                     alert('Login successful!');
-                    window.location.href = 'http://localhost/serviciosweb/lospostman/dashboard.html';
+                    window.location.href = 'http://localhost/ServiciosWeb/ProyectoFinalV1/Slim/dashboard.html';
                 } else {
+                    permiteAcceso = false;
                     alert("Login failed!");
                 }
             }
         });
-        // Prevencion de recarga de pagina
+
         e.preventDefault();
     });
 });
+
+
 
 // ADD PRODUCT
 $(document).ready(function () {
@@ -101,7 +133,7 @@ $(document).ready(function () {
         // convierte una cadena JSON en un objeto JavaScript.
         dataPars = JSON.parse(JSONData);
         $.ajax({
-            url: "http://localhost/serviciosweb/lospostman/producto/",
+            url: "http://localhost/ServiciosWeb/ProyectoFinalV1/Slim/producto/",
             method: 'POST',
             headers: {
                 "user": localStorage.getItem('user'),
@@ -111,7 +143,7 @@ $(document).ready(function () {
             success: function (data) {
                 if (data.status == "Success") {
                     alert("Insercion exitosa");
-                    window.location.href = 'http://localhost/serviciosweb/lospostman/dashboard.html';
+                    window.location.href = 'http://localhost/ServiciosWeb/ProyectoFinalV1/Slim/dashboard.html';
                     console.log(data);
                 } else {
                     alert("Insercion fallida");
