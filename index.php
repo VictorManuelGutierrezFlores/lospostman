@@ -21,7 +21,7 @@ $firebaseFactory = (new Factory)
 $database = $firebaseFactory->createDatabase();
 $auth = $firebaseFactory->createAuth();
 $app = AppFactory::create();
-$app->setBasePath("/serviciosweb/lospostman");
+$app->setBasePath("/ServiciosWeb/ProyectoFinalV1/Slim");
 
 
 
